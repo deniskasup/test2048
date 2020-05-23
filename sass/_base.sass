@@ -5,7 +5,30 @@ body
     user-select: none
     user-drag: none
 
+.menu   
+    z-index: 5
+    position: absolute
+    top: -40px
+    left: 0
+    width: 100%
+    display: flex
+    align-items: center
+    justify-content: space-between
+    & .reset-button
+        border: none
+        background: none
+        font-size: 24px
+        font-weight: bold
+.score
+    display: flex
+    align-items: center
+    font-size: 24px
+    & span
+        margin-left: 5px
+        font-weight: bold
+
 #playfield
+    z-index: 0
     position: absolute
     top: 50%
     left: 50%
@@ -14,14 +37,22 @@ body
     height: 400px
     background: white
 
+.play-board 
+    z-index: 1
+    position: absolute
+    top: 0
+    left: 0
+
 .back
+    z-index: 1
     position: absolute
     width: 100px
     height: 100px
     background: gray
         
 .thing
-    transition: all 0.1s ease
+    border-radius: 5px  
+    transition: all 0.25s ease
     position: absolute
     width: 100px
     height: 100px
@@ -29,3 +60,5 @@ body
     color: black
     text-align: center
     font: 48px/96px Arial
+    &.new-thing
+        background: black

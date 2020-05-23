@@ -11,7 +11,47 @@ body {
   user-drag: none;
 }
 
+.menu {
+  z-index: 5;
+  position: absolute;
+  top: -40px;
+  left: 0;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.menu .reset-button {
+  border: none;
+  background: none;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.score {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 24px;
+}
+
+.score span {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
 #playfield {
+  z-index: 0;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -22,7 +62,15 @@ body {
   background: white;
 }
 
+.play-board {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .back {
+  z-index: 1;
   position: absolute;
   width: 100px;
   height: 100px;
@@ -30,8 +78,9 @@ body {
 }
 
 .thing {
-  -webkit-transition: all 0.1s ease;
-  transition: all 0.1s ease;
+  border-radius: 5px;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
   position: absolute;
   width: 100px;
   height: 100px;
@@ -41,12 +90,17 @@ body {
   font: 48px/96px Arial;
 }
 
+.thing.new-thing {
+  background: black;
+}
+
 .thing.t2 {
   background: #18df00;
 }
 
 .thing.t2::after {
   content: '2';
+  z-index: 2;
 }
 
 .thing.t4 {
@@ -54,6 +108,7 @@ body {
 }
 
 .thing.t4::after {
+  z-index: 3;
   content: '4';
 }
 
@@ -62,6 +117,7 @@ body {
 }
 
 .thing.t8::after {
+  z-index: 4;
   content: '8';
 }
 
@@ -70,6 +126,7 @@ body {
 }
 
 .thing.t16::after {
+  z-index: 5;
   content: '16';
 }
 
@@ -78,6 +135,7 @@ body {
 }
 
 .thing.t32::after {
+  z-index: 6;
   content: '32';
 }
 
@@ -86,6 +144,7 @@ body {
 }
 
 .thing.t64::after {
+  z-index: 7;
   content: '64';
 }
 
@@ -94,6 +153,7 @@ body {
 }
 
 .thing.t128::after {
+  z-index: 8;
   font-size: 42px;
   content: '128';
 }
@@ -103,6 +163,7 @@ body {
 }
 
 .thing.t256::after {
+  z-index: 9;
   font-size: 42px;
   content: '256';
 }
@@ -112,6 +173,7 @@ body {
 }
 
 .thing.t512::after {
+  z-index: 10;
   font-size: 42px;
   content: '512';
 }
@@ -121,6 +183,7 @@ body {
 }
 
 .thing.t1024::after {
+  z-index: 11;
   font-size: 36px;
   content: '1024';
 }
@@ -130,6 +193,7 @@ body {
 }
 
 .thing.t2048::after {
+  z-index: 12;
   font-size: 36px;
   content: '2048';
 }

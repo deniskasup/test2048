@@ -5,23 +5,24 @@
     <title>2048</title>
     <link rel="stylesheet" href="css/main.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
+    
     <script>
-
+        
         /*
-         Пример игры: http://gabrielecirulli.github.io/2048/ только в нем ходы делаются с помощью клавиатуры
-         Правила игры.
-         В каждом раунде появляется плитка номинала «2» (с вероятностью 90 %) или «4» (с вероятностью 10 %).
-         В начале игры на поле находится 1 клетка.
-         Чтобы сделать ход, игрок должен зажать левую кнопку мыши и переместить курсор в одном из четырех направлений.
-         Все клетку с числами при этом сдивгаются в этом направлении до упора.
-         Если при этом две плитки одного номинала «налетают» одна на другую, то они слипаются в одну,
-         номинал которой равен сумме соединившихся плиток.
-         После каждого хода на свободной секции поля появляется новая плитка номиналом «2» или «4».
-         Если при нажатии кнопки местоположение плиток или их номинал не изменится, то ход не совершается.
-         Тоесть новую плитку в этом случае добавлять не нужно.
-         За каждое соединение игровые очки увеличиваются на номинал получившейся плитки.
-         Игра заканчивается поражением, если после очередного хода невозможно совершить действие.
-         */
+        Пример игры: http://gabrielecirulli.github.io/2048/ только в нем ходы делаются с помощью клавиатуры
+        Правила игры.
+        В каждом раунде появляется плитка номинала «2» (с вероятностью 90 %) или «4» (с вероятностью 10 %).
+        В начале игры на поле находится 1 клетка.
+        Чтобы сделать ход, игрок должен зажать левую кнопку мыши и переместить курсор в одном из четырех направлений.
+        Все клетку с числами при этом сдивгаются в этом направлении до упора.
+        Если при этом две плитки одного номинала «налетают» одна на другую, то они слипаются в одну,
+        номинал которой равен сумме соединившихся плиток.
+        После каждого хода на свободной секции поля появляется новая плитка номиналом «2» или «4».
+        Если при нажатии кнопки местоположение плиток или их номинал не изменится, то ход не совершается.
+        Тоесть новую плитку в этом случае добавлять не нужно.
+        За каждое соединение игровые очки увеличиваются на номинал получившейся плитки.
+        Игра заканчивается поражением, если после очередного хода невозможно совершить действие.
+        */
         $(document).ready(function () {
             var $playfield = $('#playfield');
             var mousedown = false;
@@ -35,25 +36,39 @@
     </script>
 </head>
 <body>
-<div id="playfield">
-    <div class="back" style="top: 0px; left: 0px;"></div>
-    <div class="back" style="top: 100px; left: 0px;"></div>
-    <div class="back" style="top: 200px; left: 0px;"></div>
-    <div class="back" style="top: 300px; left: 0px;"></div>
-    <div class="back" style="top: 0px; left: 100px;"></div>
-    <div class="back" style="top: 100px; left: 100px;"></div>
-    <div class="back" style="top: 200px; left: 100px;"></div>
-    <div class="back" style="top: 300px; left: 100px;"></div>
-    <div class="back" style="top: 0px; left: 200px;"></div>
-    <div class="back" style="top: 100px; left: 200px;"></div>
-    <div class="back" style="top: 200px; left: 200px;"></div>
-    <div class="back" style="top: 300px; left: 200px;"></div>
-    <div class="back" style="top: 0px; left: 300px;"></div>
-    <div class="back" style="top: 100px; left: 300px;"></div>
-    <div class="back" style="top: 200px; left: 300px;"></div>
-    <div class="back" style="top: 300px; left: 300px;"></div>
-
-    <div class="thing t2" style="top: 0px; left: 0px;"></div>
-</div>
+    <div id="playfield">
+        <div class="menu">
+            <div class="score">
+                Your score:
+                <span>0</span>
+            </div>
+            <button class="reset-button">RESET</button>
+        </div>
+        <div class="back" style="top: 0px; left: 0px;"></div>
+        <div class="back" style="top: 100px; left: 0px;"></div>
+        <div class="back" style="top: 200px; left: 0px;"></div>
+        <div class="back" style="top: 300px; left: 0px;"></div>
+        <div class="back" style="top: 0px; left: 100px;"></div>
+        <div class="back" style="top: 100px; left: 100px;"></div>
+        <div class="back" style="top: 200px; left: 100px;"></div>
+        <div class="back" style="top: 300px; left: 100px;"></div>
+        <div class="back" style="top: 0px; left: 200px;"></div>
+        <div class="back" style="top: 100px; left: 200px;"></div>
+        <div class="back" style="top: 200px; left: 200px;"></div>
+        <div class="back" style="top: 300px; left: 200px;"></div>
+        <div class="back" style="top: 0px; left: 300px;"></div>
+        <div class="back" style="top: 100px; left: 300px;"></div>
+        <div class="back" style="top: 200px; left: 300px;"></div>
+        <div class="back" style="top: 300px; left: 300px;"></div>
+        <div class="play-board">
+            <!-- <div class="thing t2" style="top: 0px; left: 0px;"></div> -->
+            
+        </div>
+        
+    </div>
+    <script src="js/thing.js"></script>
+    <script src="js/grid.js"></script>
+    <script src="js/visual.js"></script>
+    <script src="js/game.js"></script>
 </body>
 </html>
