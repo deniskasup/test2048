@@ -1,4 +1,5 @@
 body {
+  overflow: hidden;
   margin: 0;
   padding: 0 15px;
 }
@@ -9,6 +10,16 @@ body {
       -ms-user-select: none;
           user-select: none;
   user-drag: none;
+}
+
+html {
+  overflow: hidden;
+}
+
+#touch-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
 }
 
 .menu {

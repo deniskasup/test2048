@@ -1,8 +1,13 @@
+var myRegion = new ZingTouch.Region(document.body);
+var myElement = document.getElementById('touch-container');
+
+
+
 class Game {
     constructor(size = 4) {
         this.size = size;
         this.visual = new Visual;
-        this.gameSetup()
+        this.gameSetup();
 
     }
 
@@ -12,6 +17,7 @@ class Game {
         this.gameover = false;
         this.score = 0;
         this.visualRefresh();
+        this.touchControls();
         window.addEventListener('keydown', e => {
             this.controls(e.code)
 
@@ -101,6 +107,22 @@ class Game {
         this.visual.draw(this.grid, this.score);
     }
 
+    touchControls() {
+        myRegion.bind(myElement, 'swipe', e => {
+            let direction = e.detail.data[0].currentDirection;
+            if (direction < 135 && direction > 45) {
+                this.controls('ArrowUp')
+            } else if (direction < 45 || direction > 315) {
+                this.controls('ArrowRight')
+            } else if (direction < 315 && direction > 225) {
+                this.controls('ArrowDown')
+            } else if (direction < 225 || direction > 135) {
+                this.controls('ArrowLeft')
+            }
+        }, { passive: false });
+    }
+
+
     controls(keyCode) {
         let flipped = false;
         let transposed = false;
@@ -138,7 +160,7 @@ class Game {
             }
             this.changePositions()
             let changed = this.grid.compare(pastCells, this.grid.cells);
-            
+
             if (flipped) {
                 this.grid.cells = this.grid.flipCells(cells);
                 this.changePositions()
@@ -167,5 +189,3 @@ class Game {
 
 let check = new Game
 check.addStartThings()
-
-
