@@ -11,10 +11,8 @@ class Game {
         this.gamewon = false;
         this.gameover = false;
         this.score = 0;
-        console.log(this.grid);
         this.visualRefresh();
         window.addEventListener('keydown', e => {
-            console.log(e.code);
             this.controls(e.code)
 
         })
@@ -30,7 +28,7 @@ class Game {
         this.newRandomThing()
         this.newRandomThing()
         this.visualRefresh();
-        console.table(this.grid.cells);
+        // console.table(this.grid.cells);
     }
 
     newRandomThing() {
@@ -58,8 +56,6 @@ class Game {
     changePositions() {
         this.grid.allCells((x, y, thing) => {
             if (thing) {
-                // console.log('thing----', thing);
-
                 thing.changePosition({ x: x, y: y });
             }
         });
@@ -75,9 +71,7 @@ class Game {
         });
     }
 
-
     moveThings(column) {
-        // debugger
         let arr = column.filter(val => val)
         let missing = 4 - arr.length;
         let zeros = Array(missing).fill(0);
@@ -93,19 +87,18 @@ class Game {
                 let b = column[i - 1].value;
                 if (a == b) {
                     column[i].value = a + b;
-                    // debugger
+                    this.score = this.score + column[i].value
                     column[i].combined = { x: column[i - 1].x, y: column[i - 1].y };
                     column[i].lastPosition = null;
                     column[i - 1] = 0;
                 }
             }
-            // console.log(a);
         }
         return column;
     }
 
     visualRefresh() {
-        this.visual.draw(this.grid);
+        this.visual.draw(this.grid, this.score);
     }
 
     controls(keyCode) {
@@ -115,9 +108,7 @@ class Game {
         let cells = this.grid.cells;
         switch (keyCode) {
             case 'ArrowDown':
-                // do nothing
                 this.savePositions()
-
                 break;
             case 'ArrowUp':
                 this.savePositions()
@@ -126,7 +117,6 @@ class Game {
                 break;
             case 'ArrowRight':
                 this.savePositions()
-                // debugger
                 this.grid.cells = this.grid.transposeCells(this.grid.cells);
                 transposed = true;
                 break;
@@ -136,7 +126,6 @@ class Game {
                 this.grid.cells = this.grid.flipCells(this.grid.cells);
                 transposed = true;
                 flipped = true;
-                // console.table(cells)
                 break;
             default:
                 played = false;
@@ -149,51 +138,22 @@ class Game {
             }
             this.changePositions()
             let changed = this.grid.compare(pastCells, this.grid.cells);
-            console.log('changed??', changed);
             
             if (flipped) {
                 this.grid.cells = this.grid.flipCells(cells);
                 this.changePositions()
-
             }
             if (transposed) {
-                // debugger
                 this.grid.cells = this.grid.transposeCells(this.grid.cells);
                 this.changePositions()
 
             }
             if (changed) {
                 this.visualRefresh()
-                setTimeout(() => { this.newRandomThing() }, 200)
+                setTimeout(() => { this.newRandomThing() }, 110)
             }
-            // let gameover = isGameOver();
-            // if (gameover) {
-            //     console.log('GAME OVER');
-            // }
-
-            // let gamewon = isGameWon();
-            // if (gamewon) {
-            //     console.log('GAME WON');
-            // }
         }
-
-
-
-
-
     }
-
-    // keyPressed() {
-    //     // debugger
-    //     this.savePositions()
-    //     for (let i = 0; i < 4; i++) {
-    //         this.grid.cells[i] = this.moveProcess(this.grid.cells[i]);
-    //     }
-    //     this.changePositions()
-    //     this.visualRefresh()
-    //     setTimeout(() => { this.newRandomThing() }, 200)
-
-    // }
 
     moveProcess(column) {
         column = this.moveThings(column);

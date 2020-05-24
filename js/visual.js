@@ -1,12 +1,13 @@
 class Visual {
     constructor() {
         this.board = document.querySelector('.play-board')
-
+        this.scoreText = document.querySelector('.score span')
     }
 
-    draw(grid) {
+    draw(grid, score) {
         this.clearBoard()
 
+        // перерисовка всех ячеек
         grid.cells.forEach(column => {
             column.forEach(thing => {
                 if (thing) {
@@ -14,6 +15,10 @@ class Visual {
                 }
             });
         });
+
+        // обновить счет 
+        this.scoreText.innerHTML = score;
+
     }
 
     drawThing(thing) {
@@ -24,16 +29,13 @@ class Visual {
         if (thing.lastPosition) {
 
             thingDiv.classList.add('thing', 't' + thing.value, id)
-            // debugger
             thingDiv.style.cssText = (this.positionStyle(thing.lastPosition));
             this.board.append(thingDiv)
 
             this.animate('move', position, id);
         } else if (thing.combined) {
-            // debugger
             thingDiv.classList.add('thing', 't' + thing.value, id, 'combined');
             thingDiv.style.cssText = (this.positionStyle(thing.combined))
-            // debugger
             this.board.append(thingDiv)
 
             this.animate('move', position, id)
@@ -42,7 +44,6 @@ class Visual {
             thingDiv.classList.add('thing', 't' + thing.value, id, 'new');
             thingDiv.style.cssText = (this.positionStyle(position))
             this.board.append(thingDiv)
-            // debugger
             this.animate('new')
 
         }
@@ -71,8 +72,11 @@ class Visual {
             }, 0)
         } else if (type == 'new') {
             // debugger
-            document.querySelector('.new').classList.add('new-thing');
-            document.querySelector('.new').classList.remove('new-thing');
+            setTimeout(()=> {
+                document.querySelector('.new').classList.add('new-thing');
+                document.querySelector('.new').classList.remove('new-thing');
+
+            },0);
 
         }
     }
