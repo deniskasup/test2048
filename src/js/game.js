@@ -1,5 +1,8 @@
 var myRegion = new ZingTouch.Region(document.body);
 var myElement = document.getElementById('touch-container');
+import {Thing} from './thing.js'
+import {Grid} from './grid.js'
+import {Visual} from './visual.js'
 
 class Game {
     constructor(size = 4) {

@@ -1,4 +1,4 @@
-class Grid {
+export class Grid {
     constructor(size = 4) {
         this.size = size;
         this.cells = this.emptyGrid()

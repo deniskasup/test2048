@@ -1,4 +1,4 @@
-class Thing {
+export class Thing {
     constructor(position, value) {
         this.x = position.x;
         this.y = position.y;

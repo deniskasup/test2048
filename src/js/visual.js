@@ -1,4 +1,4 @@
-class Visual {
+export class Visual {
     constructor() {
         this.board = document.querySelector('.play-board')
         this.scoreText = document.querySelector('.score span')
