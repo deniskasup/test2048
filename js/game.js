@@ -16,12 +16,10 @@ class Game {
         this.score = 0;
         this.visualRefresh();
         document.querySelector('.gameover').style.display = 'none'
-        
+
         // мышь
-        // debugger
-        if(this.inputallowed) {
-            this.touchControls();
-        }
+        this.touchControls();
+
 
         // клавиатура
         window.addEventListener('keydown', e => {
@@ -103,7 +101,7 @@ class Game {
                     column[i].value = a + b;
                     this.score = this.score + column[i].value;
                     column[i].positionBeforeCombined = { x: column[i - 1].x, y: column[i - 1].y };
-                    column[i].previousValue = column[i-1].value;
+                    column[i].previousValue = column[i - 1].value;
                     column[i].lastPosition = null;
                     column[i - 1] = 0;
                 }
@@ -118,15 +116,18 @@ class Game {
 
     touchControls() {
         myRegion.bind(myElement, 'swipe', e => {
-            let direction = e.detail.data[0].currentDirection;
-            if (direction < 135 && direction > 45) {
-                this.controls('ArrowUp')
-            } else if (direction < 45 || direction > 315) {
-                this.controls('ArrowRight')
-            } else if (direction < 315 && direction > 225) {
-                this.controls('ArrowDown')
-            } else if (direction < 225 || direction > 135) {
-                this.controls('ArrowLeft')
+
+            if (this.inputallowed) {
+                let direction = e.detail.data[0].currentDirection;
+                if (direction < 135 && direction > 45) {
+                    this.controls('ArrowUp')
+                } else if (direction < 45 || direction > 315) {
+                    this.controls('ArrowRight')
+                } else if (direction < 315 && direction > 225) {
+                    this.controls('ArrowDown')
+                } else if (direction < 225 || direction > 135) {
+                    this.controls('ArrowLeft')
+                }
             }
         }, { passive: false });
     }
@@ -180,13 +181,13 @@ class Game {
                 this.inputallowed = false;
                 this.visualRefresh();
                 setTimeout(() => this.newRandomThing(), 150);
-            } 
+            }
 
             // проверяем остались ли пустые места
             this.options()
-            if(this.availibleOptions == 0) {
-                let gameover = this.isGameOver()                
-                if(gameover) {
+            if (this.availibleOptions == 0) {
+                let gameover = this.isGameOver()
+                if (gameover) {
                     document.querySelector('.gameover').style.display = 'block';
                 }
             }
@@ -224,7 +225,7 @@ class Game {
                 };
             }
         }
-        this.availibleOptions = options; 
+        this.availibleOptions = options;
     }
 
 }
