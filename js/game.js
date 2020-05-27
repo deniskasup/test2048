@@ -1,33 +1,46 @@
 var myRegion = new ZingTouch.Region(document.body);
 var myElement = document.getElementById('touch-container');
 
-
-
 class Game {
     constructor(size = 4) {
         this.size = size;
         this.visual = new Visual;
         this.gameSetup();
+        this.inputallowed = true;
 
     }
 
     gameSetup() {
         this.grid = new Grid(this.size);
-        this.gamewon = false;
         this.gameover = false;
         this.score = 0;
         this.visualRefresh();
-        this.touchControls();
+        document.querySelector('.gameover').style.display = 'none'
+        
+        // мышь
+        // debugger
+        if(this.inputallowed) {
+            this.touchControls();
+        }
+
+        // клавиатура
         window.addEventListener('keydown', e => {
-            this.controls(e.code)
-
+            if (this.inputallowed) {
+                this.controls(e.code)
+            }
         })
+
+        // reset
         document.querySelector('.reset-button').addEventListener('click', () => {
-            this.visual.clearBoard()
-            this.gameSetup()
-            this.addStartThings()
+            this.restartGame();
         })
 
+    }
+
+    restartGame() {
+        this.visual.clearBoard()
+        this.gameSetup()
+        this.addStartThings()
     }
 
     addStartThings() {
@@ -38,25 +51,20 @@ class Game {
     }
 
     newRandomThing() {
-        let options = [];
+        this.options()
+        let options = this.availibleOptions;
 
-        for (let i = 0; i < this.size; i++) {
-            for (let k = 0; k < this.size; k++) {
-                if (this.grid.cells[i][k] === 0) {
-                    options.push({ x: i, y: k });
-                };
-            }
-        }
         if (options.length > 0) {
             let value = Math.random() > 0.1 ? 2 : 4;
             let position = options[Math.floor(Math.random() * options.length)];
             let thing = new Thing(position, value);
             this.grid.addThing(thing);
             this.visual.drawThing(thing);
-        } else {
-            console.log('Game Over');
-            this.gameover = true;
+
+            //
+            this.inputallowed = true;
         }
+
     }
 
     changePositions() {
@@ -93,8 +101,9 @@ class Game {
                 let b = column[i - 1].value;
                 if (a == b) {
                     column[i].value = a + b;
-                    this.score = this.score + column[i].value
-                    column[i].combined = { x: column[i - 1].x, y: column[i - 1].y };
+                    this.score = this.score + column[i].value;
+                    column[i].positionBeforeCombined = { x: column[i - 1].x, y: column[i - 1].y };
+                    column[i].previousValue = column[i-1].value;
                     column[i].lastPosition = null;
                     column[i - 1] = 0;
                 }
@@ -121,7 +130,6 @@ class Game {
             }
         }, { passive: false });
     }
-
 
     controls(keyCode) {
         let flipped = false;
@@ -152,15 +160,14 @@ class Game {
             default:
                 played = false;
         }
-        if (played) {
 
+        if (played) {
             let pastCells = this.grid.copyGrid(this.grid.cells);
             for (let i = 0; i < 4; i++) {
                 this.grid.cells[i] = this.moveProcess(this.grid.cells[i]);
             }
             this.changePositions()
             let changed = this.grid.compare(pastCells, this.grid.cells);
-
             if (flipped) {
                 this.grid.cells = this.grid.flipCells(cells);
                 this.changePositions()
@@ -168,11 +175,20 @@ class Game {
             if (transposed) {
                 this.grid.cells = this.grid.transposeCells(this.grid.cells);
                 this.changePositions()
-
             }
             if (changed) {
-                this.visualRefresh()
-                setTimeout(() => { this.newRandomThing() }, 110)
+                this.inputallowed = false;
+                this.visualRefresh();
+                setTimeout(() => this.newRandomThing(), 150);
+            } 
+
+            // проверяем остались ли пустые места
+            this.options()
+            if(this.availibleOptions == 0) {
+                let gameover = this.isGameOver()                
+                if(gameover) {
+                    document.querySelector('.gameover').style.display = 'block';
+                }
             }
         }
     }
@@ -183,6 +199,32 @@ class Game {
         column = this.moveThings(column);
         return column
 
+    }
+
+    isGameOver() {
+        for (let i = 0; i < this.size; i++) {
+            for (let k = 0; k < this.size; k++) {
+                if (i !== (this.size - 1) && this.grid.cells[i][k].value === this.grid.cells[i + 1][k].value) {
+                    return false;
+                }
+                if (k !== (this.size - 1) && this.grid.cells[i][k].value === this.grid.cells[i][k + 1].value) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    options() {
+        let options = [];
+        for (let i = 0; i < this.size; i++) {
+            for (let k = 0; k < this.size; k++) {
+                if (this.grid.cells[i][k] === 0) {
+                    options.push({ x: i, y: k });
+                };
+            }
+        }
+        this.availibleOptions = options; 
     }
 
 }

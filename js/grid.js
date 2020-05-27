@@ -16,6 +16,7 @@ class Grid {
         return cells;
     }
 
+    // перевернуть сетку
     flipCells() {
         for (let i = 0; i < this.size; i++) {
             this.cells[i].reverse();
@@ -23,6 +24,7 @@ class Grid {
         return this.cells;
     }
 
+    // транспонировать сетку
     transposeCells(cells) {
         let transposedCells = this.emptyGrid()
         for (let i = 0; i < this.size; i++) {
@@ -34,16 +36,18 @@ class Grid {
 
     }
 
+    // скопировать сетки
     copyGrid() {
-        let extra = this.emptyGrid();
+        let copy = this.emptyGrid();
         for (let i = 0; i < this.size; i++) {   
             for (let j = 0; j < this.size; j++) {
-                extra[i][j] = this.cells[i][j];
+                copy[i][j] = this.cells[i][j];
             }
         }
-        return extra;
-
+        return copy;
     }
+
+    // проверить изменения в сетке
     compare(a, b) {
         for (let i = 0; i < 4; i++) {
             for (let k = 0; k < 4; k++) {

@@ -31,20 +31,19 @@ class Visual {
             thingDiv.classList.add('thing', 't' + thing.value, id)
             thingDiv.style.cssText = (this.positionStyle(thing.lastPosition));
             this.board.append(thingDiv)
-
             this.animate('move', position, id);
-        } else if (thing.combined) {
-            thingDiv.classList.add('thing', 't' + thing.value, id, 'combined');
-            thingDiv.style.cssText = (this.positionStyle(thing.combined))
-            this.board.append(thingDiv)
+        } else if (thing.positionBeforeCombined) {
 
+            thingDiv.classList.add('thing', 't' + thing.value, id, 'combined');
+            thingDiv.style.cssText = (this.positionStyle(thing.positionBeforeCombined))
+            this.board.append(thingDiv)
             this.animate('move', position, id)
 
         } else {
             thingDiv.classList.add('thing', 't' + thing.value, id, 'new');
             thingDiv.style.cssText = (this.positionStyle(position))
             this.board.append(thingDiv)
-            this.animate('new')
+            // this.animate('new')
 
         }
 
@@ -66,18 +65,19 @@ class Visual {
 
     animate(type, position, id) {
         if (type == 'move') {
-            // debugger
             setTimeout(() => {
                 document.querySelector('.' + id).style.cssText = (this.positionStyle(position));
             }, 0)
         } else if (type == 'new') {
-            // debugger
-            setTimeout(()=> {
                 document.querySelector('.new').classList.add('new-thing');
+            setTimeout(() => {
                 document.querySelector('.new').classList.remove('new-thing');
-
-            },0);
-
+            }, 10)
+        } else if (type == 'combined') {
+                document.querySelector('.combined').classList.add('combined-thing');
+            setTimeout(() => {
+                document.querySelector('.combined').classList.remove('combine-thing');
+            }, 0);
         }
     }
 
